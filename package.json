@@ -1,0 +1,21 @@
+{
+  "name": "io-server",
+  "version": "1.0.0",
+  "description": "Socket io server",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "keywords": [
+    "Socket",
+    "Server"
+  ],
+  "author": "NerioRith",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "dotenv": "^5.0.1",
+    "express": "^4.16.3",
+    "socket.io": "^2.1.0"
+  }
+}
