@@ -1,10 +1,17 @@
+"use strict";
 const app = require('express')();
 const server = require('http').createServer(app);
 const io = require('socket.io')(server);
-io.on('connection', function(){ /* … */ });
+require('dotenv').load();
+let HttpSubscriber = require('./subscriber/HttpSubscriber');
 
-app.get('/', function (req, res) {
+
+io.on('connection', function () { /* … */
+});
+
+app.post('/subscribe', function (req, res) {
     res.send('hello')
 });
 
-server.listen(3003);
+
+server.listen(3003, () => console.info('Server on'));
