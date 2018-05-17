@@ -6,7 +6,8 @@ require('dotenv').load();
 let HttpSubscriber = require('./subscriber/HttpSubscriber');
 
 
-io.on('connection', function () { /* … */
+io.on('connection', function (client) { /* … */
+
 });
 
 app.post('/subscribe', function (req, res) {

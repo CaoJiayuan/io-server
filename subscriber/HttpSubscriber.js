@@ -2,9 +2,9 @@
 let Subscriber = require('./Subscriber');
 
 class HttpSubscriber extends Subscriber {
-    constructor(){
+    constructor(hooks){
         super();
     }
 }
 
-module.exports = HttpSubscriber
+module.exports = HttpSubscriber;
