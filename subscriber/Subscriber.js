@@ -1,11 +1,9 @@
 "use strict";
 
 class Subscriber{
-    notify(payload){}
+    notify(channels, payload){}
 
-    subscribe(channel){
-
-    }
+    getId(){}
 }
 
 module.exports = Subscriber;

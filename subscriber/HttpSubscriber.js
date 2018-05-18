@@ -2,8 +2,15 @@
 let Subscriber = require('./Subscriber');
 
 class HttpSubscriber extends Subscriber {
-    constructor(hooks){
+    constructor(hooks, id){
         super();
+        this.provider = 'http'
+        this.id = id
+        this.hooks = hooks
+    }
+
+    notify(channels, payload) {
+
     }
 }
 
