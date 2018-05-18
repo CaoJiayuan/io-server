@@ -1,21 +1,25 @@
-"use strict";
+'use strict'
+
 class Hub {
-    static subscribers = []; // [{channel: [clientIndex, ...]}]
-    static subscribes = []; // [{clientIndex: subscriber}]
 
-    static io = null;
+  static subscribe (channels, subscriber) {
 
-    static subscribe(channels, subscriber){
+  }
 
+  static register (subscriber) {
+
+  }
+
+  static addProvider (provider) {
+    if (Hub.providers === undefined) {
+      Hub.providers = []
     }
+    Hub.providers.push(provider)
+  }
 
-    static register(subscriber) {
+  static broadcast (channel, payload) {
 
-    }
-
-    static setIo(io){
-        Hub.io = io;
-    }
+  }
 }
 
-module.exports = Hub;
+module.exports = Hub

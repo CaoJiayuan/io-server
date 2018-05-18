@@ -1,18 +1,14 @@
 "use strict";
-const app = require('express')();
-const server = require('http').createServer(app);
-const io = require('socket.io')(server);
+
 require('dotenv').load();
-let HttpSubscriber = require('./subscriber/HttpSubscriber');
 
+const app = require('./bootstrap');
 
-io.on('connection', function (client) { /* … */
+const Logger = require('./Logger');
 
-});
+const port = process.env.SERVER_PORT || 3003
 
-app.post('/subscribe', function (req, res) {
-    res.send('hello')
-});
+require('./routes')(app.express)
+require('./events')(app.io)
 
-
-server.listen(3003, () => console.info('Server on'));
+app.server.listen(port, () => Logger.info(`Server on port [${port}]`));
