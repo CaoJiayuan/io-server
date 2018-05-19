@@ -1,39 +1,37 @@
-'use strict'
+'use strict';
 
 class Hub {
 
-  static subscribe (channels, subscriber) {
-    let provider = Hub.findProvider(subscriber)
-    return provider.subscribe(channels, subscriber)
+  static subscribe(channels, subscriber) {
+    let provider = Hub.findProvider(subscriber);
+    return provider.subscribe(channels, subscriber);
   }
 
   static findProvider(subscriber) {
     Hub.initProviders();
     let p = subscriber.provider;
 
-    let provider = Hub.providers[p]
+    let provider = Hub.providers[p];
 
     if (provider === undefined) {
-      throw Error(`Can not find provider [${p}]`)
+      throw Error(`Can not find provider [${p}]`);
     }
 
     return provider;
   }
 
-  static register (subscriber) {
-
-  }
-
-  static addProvider (name, provider) {
+  static addProvider(name, provider) {
     Hub.initProviders();
     Hub.providers[name] = provider;
   }
-  static initProviders(){
+
+  static initProviders() {
     if (Hub.providers === undefined) {
-      Hub.providers = {}
+      Hub.providers = {};
     }
   }
-  static broadcast (channel, payload) {
+
+  static broadcast(channel, payload) {
     Hub.initProviders();
     for (let p in Hub.providers) {
       if (Hub.providers.hasOwnProperty(p)) {
@@ -43,10 +41,10 @@ class Hub {
   }
 
   static unsubscribe(channels, subscriber) {
-    let provider = Hub.findProvider(subscriber)
-    return provider.unsubscribe(channels, subscriber)
+    let provider = Hub.findProvider(subscriber);
+    return provider.unsubscribe(channels, subscriber);
   }
 }
 
 
-module.exports = Hub
+module.exports = Hub;

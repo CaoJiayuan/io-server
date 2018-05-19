@@ -4,7 +4,8 @@
   "description": "Socket io server",
   "main": "index.js",
   "scripts": {
-    "test": "test"
+    "test": "test",
+    "start": "node ."
   },
   "keywords": [
     "Socket",
@@ -17,6 +18,8 @@
     "colors": "^1.2.5",
     "dotenv": "^5.0.1",
     "express": "^4.16.3",
+    "jsonwebtoken": "^8.2.1",
+    "moment": "^2.22.1",
     "socket.io": "^2.1.0"
   }
 }
