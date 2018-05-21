@@ -9,7 +9,7 @@ class HttpSubscriber extends Subscriber {
         this.hooks = hooks
     }
 
-    notify(channels, payload) {
+    notify(event, payload) {
 
     }
 }

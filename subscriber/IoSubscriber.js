@@ -14,11 +14,8 @@ class IoSubscriber extends Subscriber {
   getId(){
     return this.client.id
   }
-  notify(channels, payload) {
-    this.client.emit('broadcast', {
-      channels,
-      payload
-    })
+  notify(event, payload) {
+    this.client.emit(event, payload)
   }
 }
 
