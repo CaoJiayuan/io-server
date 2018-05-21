@@ -1,0 +1,12 @@
+sudo: required
+services:
+  - docker
+before_install:
+  - docker pull node:9.11.1-alpine
+  - echo $DOCKER_PWD | docker login -u $DOCKER_USER --password-stdin
+
+script:
+  - docker build -t cjy632258/io-server .
+
+after_success:
+  - docker push cjy632258/io-server
