@@ -10,7 +10,7 @@ class IoProvider extends Provider {
   }
 
   broadcast(channel, payload) {
-    if (channel instanceof String) {
+    if (typeof channel === 'string') {
       let ce = Provider.getChannelEvent(channel);
       if (ce[0] === '*') {
         return this.io.emit(`*::${ce[1]}`, payload);
@@ -18,6 +18,7 @@ class IoProvider extends Provider {
     }
 
     let subs = this.gatherSubscribers(channel);
+
 
     subs.forEach(subscriber => {
       let event = 'message';

@@ -25,6 +25,10 @@ class Provider {
 
   insertSubscriber(subscriber) {
     let length = this.subscribers.length;
+    let index = this.indexOfSubscriber(subscriber);
+    if (index > -1) {
+      return index;
+    }
     this.subscribers.push(subscriber);
     return length;
   }
@@ -50,7 +54,7 @@ class Provider {
   }
 
   gatherSubscribers(channel) {
-    if (channel instanceof String) {
+    if (typeof channel === 'string') {
       let ce = Provider.getChannelEvent(channel);
       if (ce[0] === '*') {
         return [

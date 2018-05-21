@@ -19,7 +19,7 @@ require('./routes')(app.express);
 require('./events')(app.io);
 
 app.server.listen(port, () => {
-  Logger.info(`Server on port [${port}]`);
+  Logger.info(`>>>>>>>>>>>>>> Server started, port [${port}] <<<<<<<<<<<<<<<`);
   masterRequested || broadcastStartUp();
 });
 

@@ -19,6 +19,10 @@ function events (io) {
       let channels = data.channels || '*'
       Hub.broadcast(channels, data.payload)
     })
+    client.on(ev.UNSUBSCRIBE, data => {
+      let channels = data.channels || '*'
+      Hub.unsubscribe(channels, subscriber)
+    })
   });
 }
 module.exports = events;
