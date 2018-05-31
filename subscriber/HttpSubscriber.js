@@ -31,6 +31,8 @@ class HttpSubscriber extends Subscriber {
                 Logger.info(`Http event hook success url: [${hook[1]}] ${JSON.stringify(response.data)}`, false)                
             }).catch(err => {
                 Logger.error(`Http event hook error url: [${hook[1]}] [${err.response.status}]`)
+            }).catch(err => {
+                Logger.error(err)
             })
         }
     }

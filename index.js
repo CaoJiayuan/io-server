@@ -48,6 +48,9 @@ function broadcastStartUp() {
       retries++;
       broadcastStartUp();
     }, retryInterval);
+  }).catch(err => {
+
+    Logger.error(err)
   });
 }
 
