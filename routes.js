@@ -55,6 +55,12 @@ function routes(express) {
 
     res.send('ok');
   });
+
+  express.use('/config', auth);
+  express.post('/config', (req, res) => {
+
+    res.send('ok');
+  })
 }
 
 function generateToken(payload = {}) {
