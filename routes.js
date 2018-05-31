@@ -4,6 +4,8 @@ const Hub = require('./hub');
 let bodyParser = require('body-parser');
 const Logger = require("./Logger");
 const masterChannel = process.env.MASTER_CHANNEL || 'master';
+const jwtSecret = process.env.JWT_SECRET || 'somerandsecret';
+const jwt = require('jsonwebtoken');
 
 function routes(express) {
   express.use(bodyParser.json());
@@ -30,6 +32,9 @@ function routes(express) {
     res.send('ok');
   });
 
+  express.use('/broadcast', auth);
+  express.use('/subscribe', auth);
+
   express.post('/broadcast', (req, res) => {
     let body = req.body;
     let channels = body.channels || '*';
@@ -48,13 +53,25 @@ function routes(express) {
 }
 
 function generateToken(payload = {}) {
-  let secret = process.env.JWT_SECRET || 'somerandsecret';
-  let jwt = require('jsonwebtoken');
+
 
   return new Promise((resolve, reject) => {
-    jwt.sign(payload, secret, (err, token) => {
+    jwt.sign(payload, jwtSecret, (err, token) => {
       err ? reject(err) : resolve(token)
     })
+  })
+}
+
+function auth(req, res, next){
+  let token = req.headers['authorization']
+  jwt.verify(token.split(' ')[1], jwtSecret, function(err, decoded) {
+    // err
+    // decoded undefined
+    if (err) {
+      res.status(401).send(err)
+    } else {
+      next()
+    }
   })
 }
 
