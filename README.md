@@ -1,5 +1,7 @@
 # A broadcast server
 
+<a href="https://travis-ci.org/CaoJiayuan/io-server"><img src="https://travis-ci.org/CaoJiayuan/io-server.svg?branch=master" alt="Build Status"></a>
+
 ## Env
 * ```MASTER_HOST``` master http server host
 * ```MASTER_KEY``` master http server login key
