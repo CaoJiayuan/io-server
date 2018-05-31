@@ -6,7 +6,10 @@ const Logger = require("./Logger");
 const masterChannel = process.env.MASTER_CHANNEL || 'master';
 const jwtSecret = process.env.JWT_SECRET || 'somerandsecret';
 const jwt = require('jsonwebtoken');
-const parseJWT = require('./utils').parseJWT
+const utils = require('./utils');
+const parseJWT = utils.parseJWT
+const arrayWrap = utils.arrayWrap
+
 
 function routes(express) {
   express.use(bodyParser.json());
@@ -25,16 +28,17 @@ function routes(express) {
     }
   });
 
+  express.use('/subscribe', authIfMaster);
   express.post('/subscribe', (req, res) => {
     let id = req.body.id;
     Hub.subscribe(req.body.channels || masterChannel, new HttpSubscriber(req.body.hooks, id));
 
-    Logger.info(req.body, false)
+    Logger.info('Server subscribe ' + JSON.stringify(req.body), false)
     res.send('ok');
   });
 
-  express.use('/broadcast', auth);
-  express.use('/subscribe', auth);
+  express.use('/broadcast', authIfMaster);
+
 
   express.post('/broadcast', (req, res) => {
     let body = req.body;
@@ -75,6 +79,14 @@ function auth(req, res, next){
       next()
     }
   })
+}
+function authIfMaster(req, res, next) {
+  let channels = req.body.channels || '*';
+  if(arrayWrap(channels).indexOf(masterChannel) > -1) {
+    auth(req, res, next)
+  } else {
+    next()
+  }
 }
 
 module.exports = routes;

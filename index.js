@@ -24,13 +24,13 @@ app.server.listen(port, () => {
 });
 
 function broadcastStartUp() {
-  Logger.info(`requesting mater server`);
+  Logger.info(`requesting mater server...`, false);
   let url = process.env.MASTER_HOST + process.env.MASTER_HOOK_PATH;
   axios.post(url, {
     event: 'io:start-up',
     time : new Date().getTime() / 1000
   }).then(response => {
-    Logger.info(`master respond! code ${response.status}, body : ${JSON.stringify(response.data)}`);
+    Logger.info(`master respond start up hook! code ${response.status}, body : ${JSON.stringify(response.data)}`);
     masterRequested = true;
     retryTimer && clearTimeout(retryTimer);
   }).catch(error => {
@@ -42,7 +42,7 @@ function broadcastStartUp() {
       retryTimer && clearTimeout(retryTimer);
       return error;
     }
-    Logger.info(`retry after ${retryInterval / 1000} seconds`);
+    Logger.info(`retry after ${retryInterval / 1000} seconds`, false);
 
     retryTimer = setTimeout(() => {
       retries++;

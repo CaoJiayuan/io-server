@@ -10,6 +10,9 @@ function arrayWrap(value) {
 }
 
 function parseJWT(token) {
+  if(token === undefined) {
+    return null
+  }
   let partials = token.split(' ')
   if(partials.length > 1) {
     token = partials[1]
