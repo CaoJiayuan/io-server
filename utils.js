@@ -9,7 +9,16 @@ function arrayWrap(value) {
   return [value];
 }
 
+function parseJWT(token) {
+  let partials = token.split(' ')
+  if(partials.length > 1) {
+    token = partials[1]
+  }
+  return token;
+}
+
 
 module.exports = {
-  arrayWrap
+  arrayWrap,
+  parseJWT
 }

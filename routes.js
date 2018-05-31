@@ -6,6 +6,7 @@ const Logger = require("./Logger");
 const masterChannel = process.env.MASTER_CHANNEL || 'master';
 const jwtSecret = process.env.JWT_SECRET || 'somerandsecret';
 const jwt = require('jsonwebtoken');
+const parseJWT = require('./utils').parseJWT
 
 function routes(express) {
   express.use(bodyParser.json());
@@ -64,7 +65,8 @@ function generateToken(payload = {}) {
 
 function auth(req, res, next){
   let token = req.headers['authorization']
-  jwt.verify(token.split(' ')[1], jwtSecret, function(err, decoded) {
+ 
+  jwt.verify(parseJWT(token), jwtSecret, function(err, decoded) {
     // err
     // decoded undefined
     if (err) {
