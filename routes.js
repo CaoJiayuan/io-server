@@ -26,6 +26,7 @@ function routes(express) {
     let id = req.body.id;
     Hub.subscribe(req.body.channels || masterChannel, new HttpSubscriber(req.body.hooks, id));
 
+    Logger.info(req.body, false)
     res.send('ok');
   });
 
