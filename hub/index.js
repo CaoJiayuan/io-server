@@ -44,6 +44,12 @@ class Hub {
     let provider = Hub.findProvider(subscriber);
     return provider.unsubscribe(channels, subscriber);
   }
+
+  static initPrivates(){
+    if (Hub.privates === undefined) {
+      Hub.privates = [];
+    }
+  }
 }
 
 

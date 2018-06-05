@@ -9,6 +9,7 @@ const jwt = require('jsonwebtoken');
 const utils = require('./utils');
 const parseJWT = utils.parseJWT
 const arrayWrap = utils.arrayWrap
+const ttl = parseInt(process.env.JWT_TTL)
 
 
 function routes(express) {
@@ -17,8 +18,14 @@ function routes(express) {
   express.post('/login', (req, res) => {
     let key = req.body.key;
     if (key === process.env.MASTER_KEY) {
-      generateToken({}).then(token => res.send({
-        token
+      Logger.info(`Client login id: ${req.body._id}`, false)
+      let payload = {
+        exp: Math.floor(Date.now() / 1000) + ttl,
+        _id: req.body._id
+      }
+      generateToken(payload).then(token => res.send({
+        token,
+        exp: payload.exp
       })).catch(err => {
         Logger.error(`Generate token error ${err}`)
         res.sendStatus(500)
@@ -64,7 +71,6 @@ function routes(express) {
 }
 
 function generateToken(payload = {}) {
-
 
   return new Promise((resolve, reject) => {
     jwt.sign(payload, jwtSecret, (err, token) => {

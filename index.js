@@ -30,7 +30,7 @@ function broadcastStartUp() {
     event: 'io:start-up',
     time : new Date().getTime() / 1000
   }).then(response => {
-    Logger.info(`master respond start up hook! code ${response.status}, body : ${JSON.stringify(response.data)}`);
+    Logger.write(`master respond start up hook! code ${response.status}, body : ${JSON.stringify(response.data)}`, 'silly');
     masterRequested = true;
     retryTimer && clearTimeout(retryTimer);
   }).catch(error => {
