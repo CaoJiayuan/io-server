@@ -18,10 +18,10 @@ function routes(express) {
   express.post('/login', (req, res) => {
     let key = req.body.key;
     if (key === process.env.MASTER_KEY) {
-      Logger.info(`Client login id: ${req.body._id}`, false)
+      Logger.info(`Client login sub: ${req.body._id}`, false)
       let payload = {
         exp: Math.floor(Date.now() / 1000) + ttl,
-        _id: req.body._id
+        sub: req.body._id
       }
       generateToken(payload).then(token => res.send({
         token,
@@ -38,7 +38,8 @@ function routes(express) {
   express.use('/subscribe', authIfMaster);
   express.post('/subscribe', (req, res) => {
     let id = req.body.id;
-    Hub.subscribe(req.body.channels || masterChannel, new HttpSubscriber(req.body.hooks, id));
+    let sub = new HttpSubscriber(req.body.hooks, id);
+    Hub.subscribe(req.body.channels || masterChannel, sub);
 
     Logger.info('Server subscribe ' + JSON.stringify(req.body), false)
     res.send('ok');

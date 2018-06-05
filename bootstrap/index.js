@@ -19,7 +19,7 @@ const io = require('socket.io').listen(server,  {
 });
 
 Hub.addProvider('io', new IoProvider(io))
-Hub.addProvider('http', new HttpProvider(io))
+Hub.addProvider('http', new HttpProvider())
 
 module.exports = {
   io,

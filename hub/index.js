@@ -50,6 +50,28 @@ class Hub {
       Hub.privates = [];
     }
   }
+
+  static subscribers(){
+    Hub.initProviders();
+    let subs = [];
+    for (let p in Hub.providers) {
+      if (Hub.providers.hasOwnProperty(p)) {
+         subs = subs.concat(Hub.providers[p].subscribers);
+      }
+    }
+    return subs;
+  }
+
+  static channels(){
+    Hub.initProviders();
+    let chans = [];
+    for (let p in Hub.providers) {
+      if (Hub.providers.hasOwnProperty(p)) {
+        chans = chans.concat(Hub.providers[p].channels);
+      }
+    }
+    return chans;
+  }
 }
 
 

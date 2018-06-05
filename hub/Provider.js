@@ -17,7 +17,7 @@ class Provider {
       if (this.channels[channel] === undefined) {
         this.channels[channel] = [];
       }
-      this.channels[channel].push(id);
+      this.channels[channel].indexOf(id) > -1 || this.channels[channel].push(id);
     });
 
     return subscriber;

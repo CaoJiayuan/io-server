@@ -55,6 +55,10 @@ class HttpSubscriber extends Subscriber {
         }
         return url;
     }
+
+    getId(){
+        return this.id;
+    }
 }
 
 module.exports = HttpSubscriber;

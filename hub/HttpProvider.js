@@ -24,6 +24,9 @@ class HttpProvider extends Provider {
     });
   }
 
+  indexOfSubscriber(subscriber){
+    return this.subscribers.indexOf(this.subscribers.filter(sub => sub.getId() === subscriber.getId())[0])
+  }
 }
 
 module.exports = HttpProvider;
