@@ -18,7 +18,7 @@ function routes(express) {
   express.post('/login', (req, res) => {
     let key = req.body.key;
     if (key === process.env.MASTER_KEY) {
-      Logger.info(`Client login sub: ${req.body._id}`, false)
+      Logger.info(`Client login, subscriber: ${req.body._id}`, false)
       let payload = {
         exp: Math.floor(Date.now() / 1000) + ttl,
         sub: req.body._id
@@ -60,13 +60,15 @@ function routes(express) {
     }
 
     Hub.broadcast(chan, payload);
+    Logger.info('Server broadcast:'+ JSON.stringify(body), false)
 
     res.send('ok');
   });
 
   express.use('/config', auth);
   express.post('/config', (req, res) => {
-
+    let body = req.body;
+    Hub.setPrivates(body.privates || [])
     res.send('ok');
   })
 }
@@ -82,7 +84,7 @@ function generateToken(payload = {}) {
 
 function auth(req, res, next){
   let token = req.headers['authorization']
- 
+
   jwt.verify(parseJWT(token), jwtSecret, function(err, decoded) {
     // err
     // decoded undefined

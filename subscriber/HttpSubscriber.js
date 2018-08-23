@@ -28,7 +28,8 @@ class HttpSubscriber extends Subscriber {
                 config['data'] = payload
             }
             axios.request(config).then(response => {
-                Logger.info(`Http event hook success url: [${hook[1]}] ${JSON.stringify(response.data)}`, false)                
+                Logger.info(`Http event hook success url: [${hook[1]}] ${JSON.stringify(response.data)}`, false)
+                return response
             }).catch(err => {
                 Logger.error(`Http event hook error url: [${hook[1]}] [${err.response.status}]`)
             }).catch(err => {

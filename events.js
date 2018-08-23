@@ -10,7 +10,7 @@ const enableLoginOut = process.env.ENABLE_LOGIN_OUT
 function events (io) {
   io.on(ev.CONNECTION, function (client) {
     let token = parseJWT(client.handshake.headers['authorization']);
-    let subscriber = new IoSubscriber(client)
+    let subscriber = new IoSubscriber(client, token)
 
     client.on(ev.SUBSCRIBE, data => {
       Hub.subscribe(data.channels, subscriber)

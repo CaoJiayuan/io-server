@@ -4,11 +4,12 @@ let Subscriber = require('./Subscriber');
 
 class IoSubscriber extends Subscriber {
 
-  constructor (client) {
+  constructor (client, token) {
     super()
     // this.io = io;
     this.client = client;
     this.provider = 'io';
+    this.token = token
   }
 
   getId(){

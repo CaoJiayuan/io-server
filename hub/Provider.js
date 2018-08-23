@@ -1,5 +1,8 @@
 'use strict';
 const arrayWrap = require('../utils').arrayWrap;
+const Hub = require('./index')
+const Master = require('./Master')
+
 
 class Provider {
   constructor() {
@@ -17,10 +20,25 @@ class Provider {
       if (this.channels[channel] === undefined) {
         this.channels[channel] = [];
       }
+      this.authChannel(channel, subscriber)
       this.channels[channel].indexOf(id) > -1 || this.channels[channel].push(id);
     });
 
     return subscriber;
+  }
+
+  authChannel(channel, subscriber) {
+    if (Hub.privates) {
+      return Promise.all(Hub.privates.map(p => {
+        let match = new RegExp(p[0], 'g').exec(channel)
+        if(match > 0) {
+        } else {
+          return Promise.resolve(true)
+        }
+      }))
+    } else {
+      return Promise.resolve(true)
+    }
   }
 
   insertSubscriber(subscriber) {

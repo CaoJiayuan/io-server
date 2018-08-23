@@ -72,6 +72,18 @@ class Hub {
     }
     return chans;
   }
+
+  static setPrivates(privates){
+    Hub.privates = privates.map(p => {
+      let copy = p
+      let args = []
+      copy.match(/\{.*?\}/g).forEach(m => {
+        p = p.replace(m, '(.*?)')
+        args.push(m.replace('{', '').replace('}', ''))
+      })
+      return [p, args]
+    })
+  }
 }
 
 
