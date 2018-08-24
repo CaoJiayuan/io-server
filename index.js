@@ -26,6 +26,7 @@ app.server.listen(port, () => {
 function broadcastStartUp() {
   Logger.info(`requesting mater server...`, false);
   let url = process.env.MASTER_HOST + process.env.MASTER_HOOK_PATH;
+  Logger.info(`requesting [${url}]`, false);
   axios.post(url, {
     event: 'io:start-up',
     time : new Date().getTime() / 1000
