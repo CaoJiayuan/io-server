@@ -20,7 +20,7 @@ class Provider {
       if (this.channels[channel] === undefined) {
         this.channels[channel] = [];
       }
-      this.authChannel(channel, subscriber)
+      //this.authChannel(channel, subscriber)
       this.channels[channel].indexOf(id) > -1 || this.channels[channel].push(id);
     });
 
@@ -31,7 +31,14 @@ class Provider {
     if (Hub.privates) {
       return Promise.all(Hub.privates.map(p => {
         let match = new RegExp(p[0], 'g').exec(channel)
-        if(match > 0) {
+
+        if(match && match.length > 0) {
+          match.shift()
+          let data = {}
+          for(let i = 0; i < match.length; i ++) {
+            data[p[1][i]] = match[i]
+          }
+          //return Master.auth(data, subscriber.token)
         } else {
           return Promise.resolve(true)
         }
