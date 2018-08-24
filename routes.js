@@ -60,7 +60,7 @@ function routes(express) {
     }
 
     Hub.broadcast(chan, payload);
-    Logger.info('Server broadcast:'+ JSON.stringify(body), false)
+    Logger.debug('Server broadcast:'+ JSON.stringify(body), false)
 
     res.send('ok');
   });
