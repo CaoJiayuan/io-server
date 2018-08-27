@@ -1,6 +1,8 @@
 'use strict'
 
 let Provider = require('./Provider')
+const arrayWrap = require('../utils').arrayWrap
+
 
 class HttpProvider extends Provider {
 
@@ -17,10 +19,10 @@ class HttpProvider extends Provider {
 
       if (subscriber instanceof Array) {
         event  = subscriber[0];
-        subscriber = subscriber[1];
+        arrayWrap(subscriber[1]).map(sub => sub.notify(event.split('::')[1], payload))
+      } else {
+        subscriber.notify(event, payload)
       }
-
-      subscriber.notify(event.split('::')[1], payload)
     });
   }
 

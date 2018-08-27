@@ -4,6 +4,7 @@ const ev = {
   BROADCAST  : 'broadcast',
   DISCONNECT : 'disconnect',
   UNSUBSCRIBE: 'unsubscribe',
+  ERROR      : '_error',
 };
 
 module.exports = ev;

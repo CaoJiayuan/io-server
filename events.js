@@ -13,7 +13,7 @@ function events (io) {
     let subscriber = new IoSubscriber(client, token)
 
     client.on(ev.SUBSCRIBE, data => {
-      Hub.subscribe(data.channels, subscriber)
+      Hub.subscribe(data.channels, subscriber).catch(err => client.emit(ev.ERROR, formatError('subscribe', err)))
     })
 
     client.on(ev.DISCONNECT, () => {
@@ -30,4 +30,13 @@ function events (io) {
     })
   });
 }
+
+function formatError(type, data) {
+
+  return {
+    type,
+    data
+  }
+}
+
 module.exports = events;

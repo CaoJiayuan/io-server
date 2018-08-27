@@ -2,6 +2,8 @@
 const arrayWrap = require('../utils').arrayWrap;
 const Hub = require('./index')
 const Master = require('./Master')
+const Logger = require('../Logger')
+
 
 
 class Provider {
@@ -16,15 +18,16 @@ class Provider {
 
   subscribe(channels, subscriber) {
     let id = this.insertSubscriber(subscriber);
-    arrayWrap(channels).forEach(channel => {
+    return Promise.all(arrayWrap(channels).map(channel => {
       if (this.channels[channel] === undefined) {
         this.channels[channel] = [];
       }
-      //this.authChannel(channel, subscriber)
-      this.channels[channel].indexOf(id) > -1 || this.channels[channel].push(id);
-    });
+      return this.authChannel(channel, subscriber).then(re => {
+        this.channels[channel].indexOf(id) > -1 || this.channels[channel].push(id);
+      })
+    }));
 
-    return subscriber;
+    // return subscriber;
   }
 
   authChannel(channel, subscriber) {
@@ -38,7 +41,15 @@ class Provider {
           for(let i = 0; i < match.length; i ++) {
             data[p[1][i]] = match[i]
           }
-          //return Master.auth(data, subscriber.token)
+          return Master.auth(data, subscriber.token).then(re => {
+            Logger.debug('auth response ' + JSON.stringify(re.data), false)
+            return true
+          }).catch(error => {
+            return Promise.reject({
+              channel: channel,
+              response: error.response ? error.response.data : {}
+            })
+          })
         } else {
           return Promise.resolve(true)
         }
