@@ -79,13 +79,16 @@ class Provider {
 
   unsubscribe(channels, subscriber) {
     let index = this.indexOfSubscriber(subscriber);
-    channels === '*' && this.subscribers.slice(index, 1); // Remove subscriber
-    for (let i in this.channels) {
-      if (this.channels.hasOwnProperty(i)) {
-        let indexS = this.channels[i].indexOf(index);
-        this.channels[i].slice(indexS, 1);
+    channels === '*' && this.subscribers.splice(index, 1); // Remove subscriber
+
+    arrayWrap(channels).forEach(chan => {
+      if (this.channels.hasOwnProperty(chan)) {
+        let indexS = this.channels[chan].indexOf(index);
+
+        this.channels[chan].splice(indexS, 1);
       }
-    }
+    })
+
     return index;
   }
 
@@ -126,6 +129,10 @@ class Provider {
     }
     let ch = partials[0];
     return [ch, event];
+  }
+
+  subscribed(subscriber) {
+    return this.indexOfSubscriber(subscriber) > -1
   }
 }
 

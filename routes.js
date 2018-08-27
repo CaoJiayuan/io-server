@@ -45,6 +45,16 @@ function routes(express) {
     res.send('ok');
   });
 
+  express.post('/unsubscribe', (req, res) => {
+    let id = req.body.id;
+    let sub = new HttpSubscriber([], id);
+    Hub.unsubscribe(req.body.channels || masterChannel, sub);
+
+    Logger.debug('Server unsubscribe ' + JSON.stringify(req.body), false)
+    Logger.debug(JSON.stringify(Hub.findProvider(sub).channels))
+    res.send('ok');
+  });
+
   express.use('/broadcast', authIfMaster);
 
 
