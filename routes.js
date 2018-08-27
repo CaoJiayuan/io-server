@@ -41,7 +41,7 @@ function routes(express) {
     let sub = new HttpSubscriber(req.body.hooks, id);
     Hub.subscribe(req.body.channels || masterChannel, sub);
 
-    Logger.info('Server subscribe ' + JSON.stringify(req.body), false)
+    Logger.debug('Server subscribe ' + JSON.stringify(req.body), false)
     res.send('ok');
   });
 
