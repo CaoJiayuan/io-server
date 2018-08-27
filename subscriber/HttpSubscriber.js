@@ -28,7 +28,7 @@ class HttpSubscriber extends Subscriber {
                 config['data'] = payload
             }
             axios.request(config).then(response => {
-                Logger.info(`Http event hook success url: [${hook[1]}] ${JSON.stringify(response.data)}`, false)
+                Logger.debug(`Http event hook success url: [${hook[1]}] ${JSON.stringify(response.data)}`, false)
                 return response
             }).catch(err => {
                 Logger.error(`Http event hook error url: [${hook[1]}] [${err.response.status}]`)
@@ -52,7 +52,11 @@ class HttpSubscriber extends Subscriber {
 
     parseUrl(url){
         if(url.indexOf('http') !== 0) {
-            return MASTER_HOST + url;
+          if (url.indexOf('/') !== 0) {
+            url = '/' + url
+          }
+
+          return MASTER_HOST + url;
         }
         return url;
     }
