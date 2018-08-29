@@ -6,6 +6,11 @@
 * ```MASTER_HOST``` master http server host
 * ```MASTER_KEY``` master http server login key
 * ```MASTER_HOOK_PATH``` io-server start up hook path
+* ```MASTER_AUTH_PATH``` private channels auth path
+
+## Use docker image
+
+```docker pull cjy632258/io-server```
 
 ## Clients
 * [php](https://github.com/CaoJiayuan/io-php)
