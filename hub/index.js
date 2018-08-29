@@ -49,6 +49,7 @@ class Hub {
     if (Hub.privates === undefined) {
       Hub.privates = [];
     }
+    return Hub.privates;
   }
 
   static subscribers(){
@@ -64,10 +65,27 @@ class Hub {
 
   static channels(){
     Hub.initProviders();
-    let chans = [];
+    let chans = {};
     for (let p in Hub.providers) {
+      if (chans[p] === undefined) {
+        chans[p] = []
+      }
       if (Hub.providers.hasOwnProperty(p)) {
-        chans = chans.concat(Hub.providers[p].channels);
+        let channels = []
+        for(let c in Hub.providers[p].channels) {
+          let subscribers = Hub.providers[p].channels[c]
+          let ssIds = [];
+          subscribers.map(sub => {
+            let s = Hub.providers[p].subscribers[sub]
+            s && ssIds.push(s.getId())
+          })
+          channels.push({
+            channel: c,
+            subscribers : ssIds
+          })
+        }
+
+        chans[p] = chans[p].concat(channels);
       }
     }
     return chans;
@@ -84,6 +102,11 @@ class Hub {
       return [p, args]
     })
   }
+
+  static getProviders(){
+    return Hub.initPrivates();
+  }
+
 }
 
 

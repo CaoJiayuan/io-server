@@ -81,6 +81,12 @@ function routes(express) {
     Hub.setPrivates(body.privates || [])
     res.send('ok');
   })
+
+  express.get('/channels', (req, res) => {
+
+
+    res.send(Hub.channels());
+  })
 }
 
 function generateToken(payload = {}) {
