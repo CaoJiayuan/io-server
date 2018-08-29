@@ -8,7 +8,7 @@
 * ```MASTER_HOOK_PATH``` io-server start up hook path
 * ```MASTER_AUTH_PATH``` private channels auth path
 
-## Use docker image
+## Using docker image
 
 ```docker pull cjy632258/io-server```
 
