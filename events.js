@@ -2,6 +2,8 @@
 const ev = require('./ev')
 const Hub = require('./hub')
 const parseJWT = require('./utils').parseJWT
+const formatError = require('./utils').formatError
+
 
 const IoSubscriber = require('./subscriber/IoSubscriber')
 const masterChannel = process.env.MASTER_CHANNEL || 'master';
@@ -22,7 +24,7 @@ function events (io) {
     })
     client.on(ev.BROADCAST, data => {
       let channels = data.channels || '*'
-      Hub.broadcast(channels, data.payload)
+      Hub.broadcast(channels, data.payload, subscriber)
     })
     client.on(ev.UNSUBSCRIBE, data => {
       let channels = data.channels || '*'
@@ -31,12 +33,6 @@ function events (io) {
   });
 }
 
-function formatError(type, data) {
 
-  return {
-    type,
-    data
-  }
-}
 
 module.exports = events;

@@ -20,8 +20,17 @@ function parseJWT(token) {
   return token;
 }
 
+function formatError(type, data) {
+
+  return {
+    type,
+    data
+  }
+}
+
 
 module.exports = {
   arrayWrap,
-  parseJWT
+  parseJWT,
+  formatError
 }

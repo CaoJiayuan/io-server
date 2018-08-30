@@ -31,11 +31,11 @@ class Hub {
     }
   }
 
-  static broadcast(channel, payload) {
+  static broadcast(channel, payload, broadcaster) {
     Hub.initProviders();
     for (let p in Hub.providers) {
       if (Hub.providers.hasOwnProperty(p)) {
-        Hub.providers[p].broadcast(channel, payload);
+        Hub.providers[p].broadcast(channel, payload, broadcaster);
       }
     }
   }

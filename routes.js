@@ -86,6 +86,13 @@ function routes(express) {
 
     res.send(Hub.channels());
   })
+
+  express.use('/user', auth);
+  express.get('/user', (req, res) => {
+
+
+    res.send(req.user || {});
+  })
 }
 
 function generateToken(payload = {}) {
@@ -106,6 +113,9 @@ function auth(req, res, next){
     if (err) {
       res.status(401).send(err)
     } else {
+      req.user = {
+        _id : decoded.sub
+      }
       next()
     }
   })
