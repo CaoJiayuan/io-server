@@ -7,10 +7,18 @@ const axios = require('axios')
 
 class Master{
   static auth(data, token) {
-    return axios.post(host + path, data, {
-      headers: {
-        Authorization: 'Bearer ' + token
-      }
+    return new Promise((revole, reject) => {
+      axios.post(host + path, data, {
+        headers: {
+          Authorization: 'Bearer ' + token
+        }
+      }).then(revole).catch(err => {
+        if (!err.response) {
+          revole()
+        } else {
+          reject(err)
+        }
+      })
     })
   }
 }
