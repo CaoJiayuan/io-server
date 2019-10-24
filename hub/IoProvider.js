@@ -25,19 +25,19 @@ class IoProvider extends Provider {
     subs.forEach(subscriber => {
       let chanelEvent = subscriber[0];
       subscriber = subscriber[1];
+      if (subscriber) {
+        let [channel, event] = chanelEvent.split('::')
 
-      let [channel, event] = chanelEvent.split('::')
-
-      if (broadcaster) {
-        this.authChannel(channel, broadcaster).then(re => {
+        if (broadcaster) {
+          this.authChannel(channel, broadcaster).then(re => {
+            subscriber.notify(chanelEvent, payload)
+          }).catch(err => {
+            broadcaster.notify(ev.ERROR, formatError('broadcast', err))
+          })
+        } else {
           subscriber.notify(chanelEvent, payload)
-        }).catch(err => {
-          broadcaster.notify(ev.ERROR, formatError('broadcast', err))
-        })
-      } else {
-        subscriber.notify(chanelEvent, payload)
+        }
       }
-
     });
   }
 }
